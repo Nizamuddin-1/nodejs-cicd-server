@@ -30,5 +30,4 @@ jobs:
             cd /home/ubuntu/nodejs-cicd-server
             git pull origin main
             npm install
-            sudo fuser -k 80/tcp || true
-            npm start
+            pm2 start index.js --name "nodejs-app" || pm2 restart "nodejs-app"
