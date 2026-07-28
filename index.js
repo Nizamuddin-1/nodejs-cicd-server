@@ -180,7 +180,7 @@ app.get('/', (req, res) => {
             <div class="info-value version-highlight">v${APP_VERSION}</div>
           </div>
           <div class="info-box">
-            <div class="info-label">Process Manager</div>
+            <div class="info-label">Nizamuddin</div>
             <div class="info-value">PM2 (No Docker)</div>
           </div>
           <div class="info-box">
