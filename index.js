@@ -172,7 +172,7 @@ app.get('/', (req, res) => {
         <div class="badge">AWS EC2 Active Deployment (PM2) Nizamuddin Welcome to devops </div>
         <h1>${DEPLOY_MESSAGE}</h1>
         <p class="subtitle">
-          Your Node.js application is running directly on Amazon EC2 managed by PM2, deployed automatically using GitHub Actions.
+          Baap tera Your Node.js application is running directly on Amazon EC2 managed by PM2, deployed automatically using GitHub Actions.
         </p>
         <div class="info-grid">
           <div class="info-box">
