@@ -184,7 +184,7 @@ app.get('/', (req, res) => {
             <div class="info-value">PM2 (No Docker)</div>
           </div>
           <div class="info-box">
-            <div class="info-label">CI/CD Engine Shan</div>
+            <div class="info-label">NNNN Engine Shan</div>
             <div class="info-value">GitHub Actions</div>
           </div>
         </div>
