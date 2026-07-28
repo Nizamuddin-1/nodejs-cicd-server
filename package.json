@@ -1,17 +1,23 @@
 {
-  "name": "githubtotorial",
+  "name": "node-github-action-ec2",
   "version": "1.0.0",
-  "description": "",
-  "license": "ISC",
-  "author": "",
-  "type": "module",
+  "description": "Node.js sample application for learning GitHub Actions CI/CD deployment to AWS EC2",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "test": "echo \"Error: no test specified\" && exit 0"
   },
+  "keywords": [
+    "nodejs",
+    "github-actions",
+    "cicd",
+    "ec2",
+    "docker"
+  ],
+  "author": "",
+  "license": "MIT",
   "dependencies": {
-    "dotenv": "^17.4.2",
-    "express": "^5.2.1"
+    "express": "^4.19.2"
   }
 }
