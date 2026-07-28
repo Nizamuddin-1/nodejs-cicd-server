@@ -27,7 +27,7 @@ jobs:
           username: ${{ secrets.USER_NAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd /home/ubuntu/nodejs-cicd-app
+            cd /home/ubuntu/nodejs-cicd-server
             git pull origin main
             npm install
-            npm restart
+            npm start
