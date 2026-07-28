@@ -27,10 +27,6 @@ jobs:
           username: ${{ secrets.USER_NAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.USER_NAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
             cd /home/ubuntu/nodejs-cicd-server
             git fetch origin main
             git reset --hard origin/main
