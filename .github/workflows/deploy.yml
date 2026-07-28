@@ -27,7 +27,15 @@ jobs:
           username: ${{ secrets.USER_NAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
+            host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.USER_NAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
             cd /home/ubuntu/nodejs-cicd-server
-            git pull origin main
+            git fetch origin main
+            git reset --hard origin/main
             npm install
-            pm2 start index.js --name "nodejs-app" || pm2 restart "nodejs-app"
+            
+            # Restart or start PM2 process properly
+            pm2 restart "nodejs-app" --update-env || pm2 start index.js --name "nodejs-app"
+            pm2 save
