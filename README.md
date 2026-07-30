@@ -123,20 +123,114 @@ git push -u origin main
 
 ---
 
-## 🔄 How to Test Code Changes (Live Reload via Git Push)
+## 🐳 Step 4: Using Docker & Jenkins CI/CD Pipeline (Learning Guide)
 
-Whenever you change code and push to GitHub, it will automatically reflect on your server:
+This repository includes a complete **Docker** and **Jenkins CI/CD** configuration so you can learn industry-standard containerized deployments!
 
-1. Open `index.js` in your editor.
-2. Change the message or version:
+### 1️⃣ Files Included for Docker & Jenkins
+- **`Dockerfile`**: Defines a lightweight, secure Node.js Alpine Linux container image with multi-layer dependency caching.
+- **`.dockerignore`**: Prevents unnecessary files (`node_modules`, `.git`, `.github`) from being copied into the container image.
+- **`Jenkinsfile`**: A Declarative Jenkins Pipeline that automates checkout, Docker build, deployment, and health verification.
+- **`docker-compose.yml`**: Allows simple local container testing with Docker Compose.
+
+---
+
+### 2️⃣ How to Test Docker Locally (Before Jenkins)
+
+You can build and run the container locally on your computer:
+
+#### Option A: Using NPM Scripts
+```bash
+# 1. Build the Docker image
+npm run docker:build
+
+# 2. Run the Docker container on http://localhost
+npm run docker:run
+```
+
+#### Option B: Using Docker Compose
+```bash
+# Start container in the background
+docker compose up -d
+
+# Check logs
+docker compose logs -f
+
+# Stop and remove container
+docker compose down
+```
+
+---
+
+### 3️⃣ Setting Up Jenkins CI/CD Pipeline
+
+#### Prerequisites on your Jenkins / AWS EC2 Server:
+Make sure Docker is installed on your Jenkins server and the `jenkins` user has permission to run Docker commands:
+```bash
+# 1. Install Docker on Linux (Ubuntu/Debian)
+sudo apt update
+sudo apt install -y docker.io
+
+# 2. Add the jenkins user to the docker group so it can run docker commands without sudo
+sudo usermod -aG docker jenkins
+sudo usermod -aG docker ubuntu
+
+# 3. Restart Docker and Jenkins services
+sudo systemctl restart docker
+sudo systemctl restart jenkins
+```
+
+#### Create a Pipeline Job in Jenkins:
+1. Open your **Jenkins Dashboard** in your browser.
+2. Click **New Item** in the left menu.
+3. Enter a project name (e.g., `nodejs-docker-cicd`) and select **Pipeline**, then click **OK**.
+4. Scroll down to the **Pipeline** section:
+   - **Definition**: Choose **Pipeline script from SCM**
+   - **SCM**: Choose **Git**
+   - **Repository URL**: Paste your GitHub repository URL (e.g., `https://github.com/<YOUR-USERNAME>/<YOUR-REPO-NAME>.git`)
+   - **Branch Specifier**: `*/main`
+   - **Script Path**: `Jenkinsfile`
+5. Click **Save**.
+6. Click **Build Now** to trigger your first containerized deployment!
+
+---
+
+### 4️⃣ What Happens in the Jenkins Pipeline (`Jenkinsfile`)?
+
+```mermaid
+graph TD
+    A[👨‍💻 Developer Pushes Code to GitHub] -->|git push origin main| B(GitHub Repository)
+    B -->|Triggers Jenkins Job| C[Stage 1: 📥 Checkout Code]
+    C --> D[Stage 2: 🔍 Verify Docker Environment]
+    D --> E[Stage 3: 🐳 Build Docker Image nodejs-cicd-app:latest]
+    E --> F[Stage 4: 🚀 Deploy Container - Recreate Docker Container on Port 80]
+    F --> G[Stage 5: ✅ Verify Deployment - Run HTTP Health Check]
+    G --> H[🎉 Updated Container App Live!]
+```
+
+1. **Checkout Code 📥**: Pulls the latest code from GitHub.
+2. **Verify Docker Environment 🔍**: Checks `docker --version` and `docker info`.
+3. **Build Docker Image 🐳**: Runs `docker build -t nodejs-cicd-app:latest .` to create a lightweight Alpine image.
+4. **Deploy Container 🚀**:
+   - Safely removes any existing container (`docker rm -f nodejs-cicd-container`).
+   - Starts the new container (`docker run -d -p 80:80 --name nodejs-cicd-container ...`).
+5. **Verify Deployment ✅**: Makes an HTTP request to `http://localhost/api/health` to confirm the Express server is `UP`.
+6. **Post-Build Actions 🧹**: Automatically prunes dangling Docker images (`docker image prune -f`) to save disk space on your server.
+
+---
+
+## 🔄 How to Test Live Reload (Git Push -> Jenkins Docker Deploy)
+
+1. Open `index.js` and edit `APP_VERSION` or `DEPLOY_MESSAGE`:
    ```javascript
-   const APP_VERSION = "2.0.0";
-   const DEPLOY_MESSAGE = "I changed the code and pushed to GitHub — CI/CD updated PM2 automatically! 🚀";
+   const APP_VERSION = "2.1.0";
+   const DEPLOY_MESSAGE = "Nizamuddin Jenkins Docker CI/CD Pipeline is Live! 🐳🚀";
    ```
-3. Commit and push:
+2. Commit and push:
    ```bash
-   git add index.js
-   git commit -m "Update homepage title to test CI/CD"
+   git add .
+   git commit -m "Test Jenkins Docker CI/CD pipeline"
    git push origin main
    ```
-4. Check the **Actions** tab on GitHub — within 30 seconds, refresh your browser at `http://<YOUR_EC2_PUBLIC_IP>` and watch the new version appear instantly!
+3. Check your Jenkins dashboard -> The Pipeline will automatically build the new Docker image and recreate the container without downtime!
+

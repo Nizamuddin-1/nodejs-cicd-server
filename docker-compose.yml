@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  nodejs-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nodejs-cicd-app:latest
+    container_name: nodejs-cicd-container
+    ports:
+      - "80:80"
+    environment:
+      - PORT=80
+      - NODE_ENV=production
+    restart: unless-stopped

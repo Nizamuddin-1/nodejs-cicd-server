@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node index.js",
     "dev": "node --watch index.js",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "docker:build": "docker build -t nodejs-cicd-app:latest .",
+    "docker:run": "docker run -p 80:80 --name nodejs-cicd-container --rm nodejs-cicd-app:latest"
   },
   "keywords": [
     "nodejs",

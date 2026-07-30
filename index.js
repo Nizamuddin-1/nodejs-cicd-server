@@ -7,14 +7,14 @@ const PORT = process.env.PORT || 80;
 // =========================================================================
 // 💡 TEST CI/CD HERE: Change the version or message below and push to GitHub!
 // =========================================================================
-const APP_VERSION = "1.0.0";
-const DEPLOY_MESSAGE = "Nizamuddin CI/CD Pipeline is Working! Node.js running on AWS EC2 via PM2 🚀";
+const APP_VERSION = "2.0.0";
+const DEPLOY_MESSAGE = "Nizamuddin Jenkins CI/CD Pipeline is Working! Node.js running in a Docker Container 🐳🚀";
 
 app.get('/api/health', (req, res) => {
   res.status(200).json({
     status: 'UP',
     version: APP_VERSION,
-    runtime: 'Node.js + PM2 (No Docker)',
+    runtime: 'Node.js in Docker Container (Jenkins CI/CD)',
     timestamp: new Date().toISOString()
   });
 });
@@ -169,10 +169,10 @@ app.get('/', (req, res) => {
     <body>
       <div class="bg-glow"></div>
       <div class="card">
-        <div class="badge">AWS EC2 Active Deployment (PM2) Nizamuddin Welcome to devops </div>
+        <div class="badge">AWS EC2 Active Deployment (Docker + Jenkins) Nizamuddin Welcome to devops </div>
         <h1>${DEPLOY_MESSAGE}</h1>
         <p class="subtitle">
-          Baap tera Your Node.js application is running directly on Amazon EC2 managed by PM2, deployed automatically using GitHub Actions.
+          Your Node.js application is packaged inside a lightweight Docker container and deployed automatically using a Jenkins CI/CD Declarative Pipeline.
         </p>
         <div class="info-grid">
           <div class="info-box">
@@ -181,19 +181,19 @@ app.get('/', (req, res) => {
           </div>
           <div class="info-box">
             <div class="info-label">Nizamuddin</div>
-            <div class="info-value">PM2 (No Docker)</div>
+            <div class="info-value">Docker Container 🐳</div>
           </div>
           <div class="info-box">
             <div class="info-label">NNNN Engine Shan</div>
-            <div class="info-value">GitHub Actions</div>
+            <div class="info-value">Jenkins CI/CD ⚙️</div>
           </div>
         </div>
         <div class="instructions">
-          <h3>💡 How to test CI/CD automatic reload:</h3>
+          <h3>💡 How to test Jenkins CI/CD automatic reload:</h3>
           <p>
             1. Edit <code>APP_VERSION</code> or <code>DEPLOY_MESSAGE</code> in <code>index.js</code>.<br>
             2. Commit & push your changes to GitHub (<code>git push</code>).<br>
-            3. GitHub Actions will automatically pull the new code and restart PM2 on EC2!
+            3. Jenkins will automatically build a new Docker image and recreate the running container!
           </p>
         </div>
       </div>
