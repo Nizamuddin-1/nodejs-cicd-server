@@ -11,6 +11,7 @@ pipeline {
         }
         stage("Code") {
             steps {
+                echo "This is testing for scm"
                 script{
                     clone("https://github.com/Nizamuddin-1/nodejs-cicd-server.git","main")
                 }
